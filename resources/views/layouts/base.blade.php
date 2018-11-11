@@ -43,7 +43,7 @@
 <!-- end 当前页单独js -->
 <!-- 流量统计 -->
 <div style="display: none;">
-    <script src="https://s19.cnzz.com/z_stat.php?id=1275049050&web_id=1275049050" language="JavaScript"></script>
+    <script src="https://s96.cnzz.com/z_stat.php?id=1275318974&web_id=1275318974" language="JavaScript"></script>
 </div>
 <!-- end 流量统计 -->
 </body>
