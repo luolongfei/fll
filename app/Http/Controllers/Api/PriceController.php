@@ -158,6 +158,7 @@ class PriceController extends Controller
     public function getByApp(Request $request)
     {
         try {
+            $qq = $request->post('qq');
             $productUrl = $request->post('productUrl', '');
             if (empty($productUrl)) throw new \Exception('输入的商品网址为空');
             if (stripos($productUrl, 'http') === false) throw new \Exception('请输入一个合法的商品网址');
@@ -254,6 +255,7 @@ class PriceController extends Controller
                 'url' => $url,
                 'shop_name' => $shopName,
                 'ip' => $request->ip(),
+                'qq' => $qq,
                 'device' => $agent->device(),
                 'os' => $agent->platform(),
                 'os_version' => $agent->version($agent->platform()),

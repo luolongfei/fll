@@ -121,7 +121,8 @@ start.click(function () {
     fll.disableBtn(start, '查询中');
 
     $.callApi(fll.urls.getHistoricalPrices, {
-        'productUrl': productUrl.val()
+        'productUrl': productUrl.val(),
+        'qq': localdb.get('qq') ? localdb.get('qq') : '未知'
     }, function (result) {
         chart.myChart.resize({ // 默认不给dom高度，在这里来重置
             width: 'auto',
