@@ -1,0 +1,62 @@
+/* 引入字体文件 */
+/*@font-face {
+    font-family: 'Cutive Mono';
+    src: url('../fonts/CutiveMono-Regular.ttf');
+}*/
+
+.red-heart {
+    color: #f38270;
+    font-size: 22px;
+}
+
+.red {
+    color: #f38270;
+}
+
+.font-cutive-mono {
+    font-family: 'Cutive Mono', monospace, serif;
+}
+
+.highlight span {
+    font-size: 16px;
+    color: #eb1b2e;
+}
+
+.highlight a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #eb1b2e;
+    transition: 0.2s all ease-in-out;
+    display: inline-block;
+    background: #fff;
+    text-align: center;
+    padding: 0 8px;
+    border-radius: 16px;
+    border: 1px solid #eb1b2e;
+}
+
+.highlight a:hover {
+    background-color: #eb1b2e;
+    color: #ffffff !important;
+}
+
+#tips {
+    font-size: 12px;
+    border: 1px dashed #c23531;
+}
+
+.hint {
+    color: #818182;
+    font-size: 12px;
+    text-align: left;
+    padding: 2px;
+}
+
+.mmsgLetterHeader {
+    height: 23px;
+    /*background: url('images/mmsgletter_2_bg_topline.png') repeat-x 0 0;*/
+    background: 7px 0 repeat-x #FFF;
+    background-image: -webkit-repeating-linear-gradient(135deg, #4882CE, #4882CE 20px, #FFF 20px, #FFF 35px, #EB1B2E 35px, #EB1B2E 55px, #FFF 55px, #FFF 70px);
+    background-image: repeating-linear-gradient(-45deg, #4882CE, #4882CE 20px, #FFF 20px, #FFF 35px, #EB1B2E 35px, #EB1B2E 55px, #FFF 55px, #FFF 70px);
+    background-size: 110px 10px;
+}
