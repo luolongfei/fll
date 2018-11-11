@@ -59,7 +59,7 @@ $.callApi = function (api, data, fn, handleTimeOut = true) {
         timeout = setTimeout(function () {
             swal('服务器没有鸟你，别气馁，再点一下试试');
             fll.activeBtn(start, '开始查询');
-        }, 4000);
+        }, 5000);
     }
 
     return $.post(api, data, function (result) {
