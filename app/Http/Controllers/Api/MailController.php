@@ -53,7 +53,7 @@ class Mail
                     ],
                 ],
                 'system_date' => date('Y-m-d H:i:s')
-            ], 400);
+            ]);
         }
 
         return response()->json([

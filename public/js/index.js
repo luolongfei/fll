@@ -53,13 +53,13 @@ fll.urls = {
     sendMail: '/api/mail/idea',
 };
 
-$.callApi = function (api, data, fn, handleTimeOut = true) {
+$.callApi = function (api, data, fn, handleTimeOut = true) { // 响应值注意别返回200以外的状态码，否则可能进不了$.post的匿名函数导致无法触发错误提示
     let timeout = null;
     if (handleTimeOut) {
         timeout = setTimeout(function () {
             swal('服务器没有鸟你，别气馁，再点一下试试');
             fll.activeBtn(start, '开始查询');
-        }, 5000);
+        }, 4000);
     }
 
     return $.post(api, data, function (result) {
@@ -181,6 +181,7 @@ idea.click(function () {
             let qq = $('#qq');
 
             localdb.set('qq', qq.val());
+            setQqAvatar();
 
             if (fll.checkEmpty(ideaContent)) {
                 swal.stopLoading();
@@ -243,8 +244,7 @@ idea.click(function () {
     });*/
 });
 
-if (localdb.check()) {
-    // 判断头像显示
+function setQqAvatar() {
     let qqAvatar = $('#qq-avatar');
     let qq = localdb.get('qq') ? localdb.get('qq') : '';
     if (qq.indexOf('@') !== -1) {
@@ -254,6 +254,11 @@ if (localdb.check()) {
         qqAvatar.attr('src', 'https://q2.qlogo.cn/headimg_dl?dst_uin=' + qq + '&spec=100');
     }
     qqAvatar.show();
+}
+
+if (localdb.check()) {
+    // 设置qq头像
+    setQqAvatar();
 
     // 恢复输入框值
     productUrl.val(localdb.get('productUrl') ? localdb.get('productUrl') : '');

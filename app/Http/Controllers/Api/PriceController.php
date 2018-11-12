@@ -124,7 +124,7 @@ class PriceController extends Controller
                     ],
                 ],
                 'system_date' => date('Y-m-d H:i:s')
-            ], 400);
+            ]);
         }
     }
 
@@ -161,7 +161,7 @@ class PriceController extends Controller
             $qq = $request->post('qq', '未知');
             $productUrl = $request->post('productUrl', '');
             if (empty($productUrl)) throw new \Exception('输入的商品网址为空');
-            if (stripos($productUrl, 'http') === false) throw new \Exception('请输入一个合法的商品网址');
+            if (stripos($productUrl, 'http') === false) throw new \Exception('商品网址非法，再检查一下吧');
 
             $client = new Client([
                 'timeout' => self::$timeout,
@@ -290,7 +290,7 @@ class PriceController extends Controller
                     ],
                 ],
                 'system_date' => date('Y-m-d H:i:s')
-            ], 400);
+            ]);
         }
     }
 }
