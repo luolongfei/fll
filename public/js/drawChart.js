@@ -190,12 +190,27 @@ function drawChart() {
                     // console.log(data[i]);
                 }*/
             }
+
+            let title = '「' + result.title + '」价格走势'.toString();
+            let fontSize = 16;
+            let screenWidth = window.screen.width; // 屏幕分辨率宽
+            let maxRowLen = Math.floor(screenWidth / fontSize); // 每行最多字数
+
+            if (title.length > maxRowLen) { // 超过处替换为换行，以实现自动换行效果
+                let regex = new RegExp('(?!^)(?=(.{' + maxRowLen + '}?)+$)', 'g'); // 匹配每最多个字数处
+                title = title.replace(regex, '\n');
+            }
+
             option.series[0].data = lineData;
             option.title = {
-                text: '「' + result.title + '」价格走势',
+                text: title,
                 subtext: '这是该商品从' + result.price_data.bd.replace(/\//g, '-') + '到' + result.price_data.ed.replace(/\//g, '-') + '的价格变动情况',
                 x: 'center',
                 top: 6,
+                textStyle: {
+                    // fontFamily: 'Microsoft YaHei',
+                    fontSize: fontSize,
+                },
             };
             this.myChart.setOption(option); // 参数二，是否不跟之前设置的option进行合并，默认为false，即合并
         }
