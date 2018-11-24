@@ -9,10 +9,10 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Agent\Agent;
 
 class Mail
 {
@@ -22,17 +22,20 @@ class Mail
         $content = $request->post('content', '');
 
         try {
-            $agent = new Agent();
-            DB::table('mail')->insert([
+            $insert = [
                 'content' => $content,
                 'qq' => $qq,
-                'ip' => $request->ip(),
-                'device' => $agent->device(),
-                'os' => $agent->platform(),
-                'os_version' => $agent->version($agent->platform()),
-                'browser' => $agent->browser(),
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'ip' => isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $request->ip(), // 防止ip地址全是cdn节点的
                 'created_at' => date('Y-m-d H:i:s')
-            ]);
+            ];
+            DB::table('mail')->insert($insert);
+        } catch (\Exception $e) {
+            Log::error('写入mail内容到数据库时出错，数据内容：' . $insert);
+        }
+
+        try {
+
 
             self::sendMail(
                 sprintf('陛下，QQ为%s的用户上奏了', $qq),
@@ -45,6 +48,8 @@ class Mail
                 strpos($qq, '@') === false ? $qq . '@qq.com' : $qq
             );
         } catch (\Exception $e) {
+            Log::error('用户上载邮件推送失败：' . $e->getMessage());
+
             return response()->json([
                 'status' => 9,
                 'message_array' => [

@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Log;
 
 class PriceController extends Controller
 {
@@ -44,19 +44,6 @@ class PriceController extends Controller
             if (stripos($productUrl, 'http') === false) throw new \Exception('请输入一个合法的商品网址');
 
             self::handleUri($productUrl, $shopName);
-
-            $agent = new Agent();
-            DB::table('use_record')->insert([
-                'product_name' => '',
-                'url' => $productUrl,
-                'shop_name' => $shopName,
-                'ip' => $request->ip(),
-                'device' => $agent->device(),
-                'os' => $agent->platform(),
-                'os_version' => $agent->version($agent->platform()),
-                'browser' => $agent->browser(),
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
 
             $client = new Client([
                 'timeout' => self::$timeout,
@@ -158,7 +145,7 @@ class PriceController extends Controller
     public function getByApp(Request $request)
     {
         try {
-            $qq = $request->post('qq', '未知');
+            $qq = $request->post('qq');
             $productUrl = $request->post('productUrl', '');
             if (empty($productUrl)) throw new \Exception('输入的商品网址为空');
             if (stripos($productUrl, 'http') === false) throw new \Exception('商品网址非法，再检查一下吧');
@@ -213,14 +200,14 @@ class PriceController extends Controller
             }
             $zanId = isset($goodsInfoRes['data']['zan_goods']['id']) ? $goodsInfoRes['data']['zan_goods']['id'] : 0; // 此项不是所有商品都有
             $summary = isset($goodsInfoRes['data']['zan_goods']['summary']) ? $goodsInfoRes['data']['zan_goods']['summary'] : '没有描述';
-            $title = $goodsInfoRes['data']['goods_info']['title'];
-            $image = $goodsInfoRes['data']['goods_info']['multi_pic'][0];
+            $title = $goodsInfoRes['data']['goods_info']['title'] ?: '';
+            $image = $goodsInfoRes['data']['goods_info']['multi_pic'][0] ?: '';
             $price = $goodsInfoRes['data']['goods_info']['price'];
-            $merchantName = $goodsInfoRes['data']['goods_info']['merchant_name'];
-            $shopName = $goodsInfoRes['data']['goods_info']['shop_name'];
-            $cateName = $goodsInfoRes['data']['goods_info']['cate_name'];
-            $sellCount = $goodsInfoRes['data']['goods_info']['sell_count'];
-            $saleMessage = $goodsInfoRes['data']['goods_info']['sale_message'];
+            $merchantName = $goodsInfoRes['data']['goods_info']['merchant_name'] ?: '';
+            $shopName = $goodsInfoRes['data']['goods_info']['shop_name'] ?: '';
+            $cateName = $goodsInfoRes['data']['goods_info']['cate_name'] ?: '';
+            $sellCount = $goodsInfoRes['data']['goods_info']['sell_count'] ?: '';
+            $saleMessage = $goodsInfoRes['data']['goods_info']['sale_message'] ?: '';
 
             /**
              * 最后，获取商品历史价格
@@ -244,24 +231,27 @@ class PriceController extends Controller
             /**
              * 存个档
              */
-            $agent = new Agent();
-            DB::table('use_record')->insert([
-                'product_name' => $title,
-                'product_image' => $image,
-                'merchant_name' => $merchantName, // 店名
-                'cate_name' => $cateName,
-                'sell_count' => $sellCount,
-                'sale_message' => $saleMessage,
-                'url' => $url,
-                'shop_name' => $shopName,
-                'ip' => $request->ip(),
-                'qq' => $qq,
-                'device' => $agent->device(),
-                'os' => $agent->platform(),
-                'os_version' => $agent->version($agent->platform()),
-                'browser' => $agent->browser(),
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
+            try {
+                $ip = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $request->ip(); // 防止ip地址全是cdn节点的
+                $userAgent = $_SERVER['HTTP_USER_AGENT'];
+                $useRecord = [
+                    'product_name' => $title,
+                    'product_image' => $image,
+                    'merchant_name' => $merchantName, // 店名
+                    'cate_name' => $cateName,
+                    'sell_count' => $sellCount,
+                    'sale_message' => $saleMessage,
+                    'url' => $url,
+                    'shop_name' => $shopName,
+                    'ip' => $ip,
+                    'qq' => $qq,
+                    'user_agent' => $userAgent,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+                DB::table('use_record')->insert($useRecord);
+            } catch (\Exception $e) {
+                Log::error('存档出错：' . $e->getMessage(), $useRecord);
+            }
 
             return response()->json([
                 'status' => 0,

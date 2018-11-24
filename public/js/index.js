@@ -122,7 +122,7 @@ start.click(function () {
 
     $.callApi(fll.urls.getHistoricalPrices, {
         'productUrl': productUrl.val(),
-        'qq': localdb.get('qq') ? localdb.get('qq') : '未知'
+        'qq': localdb.get('qq')
     }, function (result) {
         chart.myChart.resize({ // 默认不给dom高度，在这里来重置
             width: 'auto',

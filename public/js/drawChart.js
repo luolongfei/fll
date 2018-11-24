@@ -191,6 +191,10 @@ function drawChart() {
                 }*/
             }
 
+            /**
+             * 处理标题
+             * @type {string}
+             */
             let title = '「' + result.title + '」价格走势'.toString();
             let fontSize = 16;
             let screenWidth = window.screen.width; // 屏幕分辨率宽
@@ -201,6 +205,27 @@ function drawChart() {
                 title = title.replace(regex, '\n');
             }
 
+            console.log(result);
+            /**
+             * 趋势
+             * @type {string}
+             */
+            let trend = '';
+            switch (result.price_data.trend) {
+                case 1:
+                    trend = '历史低价';
+                    break;
+                case 2:
+                    trend = '价格下降';
+                    break;
+                case 3:
+                    trend = '价格上涨';
+                    break;
+                case 4:
+                default:
+                    trend = '价格平稳'
+            }
+            console.log(trend);
             option.series[0].data = lineData;
             option.title = {
                 text: title,
