@@ -20,9 +20,7 @@ Route::get('/about', 'HomeController@about');
 /**
  * api
  */
-Route::middleware(['apiLogger'])->group(function () {
-    Route::prefix('api')->group(function () {
-        Route::post('price/get', ['uses' => 'Api\PriceController@getByApp']);
-        Route::post('mail/idea', ['uses' => 'Api\Mail@idea']);
-    });
+Route::prefix('api')->group(function () {
+    Route::post('price/get', ['uses' => 'Api\PriceController@getByApp']);
+    Route::post('mail/idea', ['uses' => 'Api\Mail@idea']);
 });
