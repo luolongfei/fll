@@ -97,7 +97,7 @@ function drawChart() {
                         fontWeight: 666,
                     },
                     handle: { // 手柄
-                        show: true,
+                        show: false,
                         color: '#c23531',
                         // size: [200, 300],
                         borderWidth: 6,
@@ -237,6 +237,12 @@ function drawChart() {
                     fontSize: fontSize,
                 },
             };
+
+            // 仅移动端显示手柄
+            if (OS.phone || OS.ipad) {
+                option.xAxis.axisPointer.handle.show = true;
+            }
+
             this.myChart.setOption(option); // 参数二，是否不跟之前设置的option进行合并，默认为false，即合并
         }
     };

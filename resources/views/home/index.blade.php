@@ -48,5 +48,5 @@
 @push('js')
     <script src="/js/echarts.min.js"></script>
     <script src="/js/drawChart.js?20181124"></script>
-    <script src="/js/index.js?20181124"></script>
+    <script src="/js/main.js?20181124"></script>
 @endpush

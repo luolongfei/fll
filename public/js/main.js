@@ -1,31 +1,3 @@
-/**
- * localdb
- * @type {{check: (function(): Storage), save: localdb.save, get: (function(*=): (string | null)), get_key: (function(*=): (string | null)), remove: localdb.remove, remove_all: localdb.remove_all, length: (function(): number)}}
- */
-var localdb = {
-    check: function () {
-        return window.localStorage;
-    },
-    set: function (key, value) {
-        localStorage.setItem(key, value);
-    },
-    get: function (key) {
-        return localStorage.getItem(key);
-    },
-    get_key: function (index) {
-        return localStorage.key(index);
-    },
-    remove: function (key) {
-        localStorage.removeItem(key);
-    },
-    remove_all: function () {
-        localStorage.clear();
-    },
-    length: function () {
-        return localStorage.length;
-    },
-};
-
 var fll = {
     checkEmpty: function (inputObj, prompt) {
         let input = inputObj.val().replace(/\s/g, ''); // 去除空白字符
@@ -208,40 +180,6 @@ idea.click(function () {
             // do nothing
         }
     });
-
-    /*swal({
-        content: prepareIdea,
-        buttons: ['算了', '发送'],
-        closeOnClickOutside: false,
-    }).then(value => {
-        fll.activeBtn(idea);
-
-        if (value) {
-            let ideaContent = $('#ideaContent');
-            let qq = $('#qq');
-
-            localdb.set('ideaContent', ideaContent.val());
-            localdb.set('qq', qq.val());
-
-            if (fll.checkEmpty(ideaContent)) {
-                return false;
-            }
-            if (fll.checkEmpty(qq, '请输入qq号，以便第一时间收到作者的邮件回信')) {
-                return false;
-            }
-
-            $.callApi(fll.urls.sendMail, {
-                'qq': qq.val(),
-                'content': ideaContent.val()
-            }, function (result) {
-                swal('发送成功，静候佳音', {
-                    icon: 'success',
-                });
-            });
-        } else {
-
-        }
-    });*/
 });
 
 function setQqAvatar() {
