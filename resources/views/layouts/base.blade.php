@@ -10,22 +10,29 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>查价喵 | 以史为镜，可以知奸商</title>
     <meta name="description" content="万事胜意。">
     <meta name="keywords" content="FLL">
+
+    <title>查价喵 | 以史为镜，可以知奸商</title>
+
     <!-- common css -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <!-- end common css -->
+
     <!-- 当前页单独css -->
     @stack('css')
     <!-- end 当前页单独css -->
 </head>
 <body>
-@includeIf('common.header')
+
+@yield('header', View::make('common.header'))
+
 @yield('content')
-@includeIf('common.footer')
+
+@yield('footer', View::make('common.footer'))
+
 <!-- common js -->
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -39,13 +46,10 @@
     });
 </script>
 <!-- end common js -->
+
 <!-- 当前页单独js -->
 @stack('js')
 <!-- end 当前页单独js -->
-<!-- 流量统计 -->
-<div style="display: none;">
-    <script src="https://s96.cnzz.com/z_stat.php?id=1275318974&web_id=1275318974" language="JavaScript"></script>
-</div>
-<!-- end 流量统计 -->
+
 </body>
 </html>

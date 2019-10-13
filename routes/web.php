@@ -11,11 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 /**
  * pages
  */
 Route::get('/', 'HomeController@index');
 Route::get('/about', 'HomeController@about');
+Route::get('/price/{urlCode?}', 'HomeController@price');
 
 /**
  * api
