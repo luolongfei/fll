@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('title')
+    历史价格
+@endsection
+
 @section('header')
     {{--此处为了覆盖默认的header--}}
 @endsection

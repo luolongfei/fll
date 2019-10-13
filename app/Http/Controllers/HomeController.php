@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function price(Request $request, $urlCode = '')
     {
         if (empty($urlCode)) {
-            
+
         }
 
         return view('home.price');

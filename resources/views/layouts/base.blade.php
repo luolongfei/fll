@@ -13,7 +13,7 @@
     <meta name="description" content="万事胜意。">
     <meta name="keywords" content="FLL">
 
-    <title>查价喵 | 以史为镜，可以知奸商</title>
+    <title>@yield('title', '查价喵') | 以史为镜，可以知奸商</title>
 
     <!-- common css -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
