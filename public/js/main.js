@@ -25,28 +25,8 @@ fll.urls = {
     sendMail: '/api/mail/idea',
 };
 
-$.callApi = function (api, data, fn, handleTimeOut = true) { // 响应值注意别返回200以外的状态码，否则可能进不了$.post的匿名函数导致无法触发错误提示
-    let timeout = null;
-    if (handleTimeOut) {
-        timeout = setTimeout(function () {
-            swal('服务器没有鸟你，别气馁，再点一下试试');
-            fll.activeBtn(start, '开始查询');
-        }, 4000);
-    }
-
-    return $.post(api, data, function (result) {
-        handleTimeOut && timeout && clearTimeout(timeout);
-        fll.activeBtn(start, '开始查询');
-
-        if (result.status !== 0) {
-            swal(result.message_array[0].message);
-
-            return false;
-        } else {
-            fn && fn(result);
-        }
-    }, 'json');
-    /*return $.ajax({
+$.callApi = function (api, data, fn, reqType = 'POST') { // 响应值注意别返回200以外的状态码，否则可能进不了$.post的匿名函数导致无法触发错误提示
+    return $.ajax({
         url: api,
         cache: false,
         dataType: 'json',
@@ -73,7 +53,7 @@ $.callApi = function (api, data, fn, handleTimeOut = true) { // 响应值注意�
                 swal(errorThrown);
             }
         }
-    });*/
+    });
 };
 
 let start = $('#start');
