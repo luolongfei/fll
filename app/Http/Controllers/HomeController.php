@@ -38,7 +38,9 @@ class HomeController extends Controller
     public function price(Request $request, $urlCode = '')
     {
         if (empty($urlCode)) {
-
+            return view('common.error', [
+                'errorMsg' => 'urlCode参数缺失，无法查询，请重试'
+            ]);
         }
 
         return view('home.price');
