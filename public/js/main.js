@@ -1,28 +1,8 @@
 var fll = {
-    checkEmpty: function (inputObj, prompt) {
-        let input = inputObj.val().replace(/\s/g, ''); // 去除空白字符
-        if (input.length === 0) {
-            inputObj.val('');
-            swal(prompt ? prompt : '你没有输入任何内容');
-
-            return true;
-        }
-
-        return false;
-    },
-    activeBtn: function (btnObj, html) {
-        btnObj.prop({disabled: false});
-        html && btnObj.html(html);
-    },
-    disableBtn: function (btnObj, html) {
-        btnObj.prop({disabled: true});
-        html && btnObj.html(html);
+    urls: {
+        getHistoricalPrices: '/api/price/get',
+        sendMail: '/api/mail/idea'
     }
-};
-
-fll.urls = {
-    getHistoricalPrices: '/api/price/get',
-    sendMail: '/api/mail/idea',
 };
 
 $.callApi = function (api, data, fn, reqType = 'POST') { // 响应值注意别返回200以外的状态码，否则可能进不了$.post的匿名函数导致无法触发错误提示
@@ -34,8 +14,6 @@ $.callApi = function (api, data, fn, reqType = 'POST') { // 响应值注意别�
         type: reqType,
         timeout: 4000,
         success: function (result, textStatus, jqXHR) {
-            fll.activeBtn(start, '开始查询');
-
             if (result.status !== 0) {
                 swal(result.message_array[0].message);
 
@@ -45,8 +23,6 @@ $.callApi = function (api, data, fn, reqType = 'POST') { // 响应值注意别�
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            fll.activeBtn(start, '开始查询');
-
             if (textStatus === 'timeout') {
                 swal('服务器没有鸟你，别气馁，再点一下试试');
             } else {
@@ -56,7 +32,7 @@ $.callApi = function (api, data, fn, reqType = 'POST') { // 响应值注意别�
     });
 };
 
-let start = $('#start');
+let inquire = $('#inquire');
 let clear = $('#clear');
 let idea = $('#idea');
 
@@ -66,11 +42,10 @@ productUrl.focus();
 let chart = drawChart();
 chart.initChart('line-chart');
 
-start.click(function () {
-    if (fll.checkEmpty(productUrl)) {
+inquire.click(function () {
+    if (isEmpty(productUrl.val())) {
         return false;
     }
-    fll.disableBtn(start, '查询中');
 
     $.callApi(fll.urls.getHistoricalPrices, {
         'productUrl': productUrl.val(),
@@ -89,10 +64,7 @@ clear.click(function () {
 });
 
 idea.click(function () {
-    fll.disableBtn(idea);
-
     let qqVal = localdb.get('qq') ? localdb.get('qq') : '';
-
     let prepareIdea = document.createElement('div'); // js中创建的dom不会自动追加到文档中，不必担心影响样式。能取到dom值。
     prepareIdea.innerHTML = '<div class="mmsgLetterHeader" style="height:23px;"></div>' +
         '            <div class="input-group mb-3 mt-4">\n' +
@@ -126,8 +98,6 @@ idea.click(function () {
         },
         closeOnClickOutside: false,
     }).then(value => {
-        fll.activeBtn(idea);
-
         if (value) {
             let ideaContent = $('#ideaContent');
             let qq = $('#qq');
@@ -135,11 +105,11 @@ idea.click(function () {
             localdb.set('qq', qq.val());
             setQqAvatar();
 
-            if (fll.checkEmpty(ideaContent)) {
+            if (isEmpty(ideaContent.val())) {
                 swal.stopLoading();
                 return false;
             }
-            if (fll.checkEmpty(qq, '请输入qq号，以便第一时间收到作者的邮件回信')) {
+            if (isEmpty(qq.val(), '请输入qq号，以便第一时间收到作者的邮件回信')) {
                 swal.stopLoading();
                 return false;
             }

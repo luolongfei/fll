@@ -18,7 +18,7 @@
         <!-- end 输入框 -->
         <!-- 提交 -->
         <button type="button" class="btn btn-outline-secondary btn-block mt-3" role="button" id="clear">清空</button>
-        <button type="button" class="btn btn-outline-primary btn-block mt-2" role="button" id="start">开始查询</button>
+        <button type="button" class="btn btn-outline-primary btn-block mt-2" role="button" id="inquire">开始查询</button>
         <!-- end 提交 -->
     </div>
 

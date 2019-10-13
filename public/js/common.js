@@ -52,3 +52,16 @@ var OS = function () {
         phone: a
     }
 }();
+
+var isEmpty = function (val, prompt, fn) {
+    let input = val.toString().replace(/\s/g, ''); // 去除空白字符
+    if (input.length === 0) {
+        swal(prompt ? prompt : '你没有输入任何内容');
+
+        fn && fn();
+
+        return true;
+    }
+
+    return false;
+};
