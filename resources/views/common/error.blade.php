@@ -11,7 +11,7 @@
     <div class="container">
         <div class="raw">
             <div class="col-12 mt-5 pt-5">
-                <div class="alert alert-warning show text-center display-4" role="alert">
+                <div class="alert alert-warning show text-center display-5" role="alert">
                     {{$errorMsg}}
                 </div>
             </div>

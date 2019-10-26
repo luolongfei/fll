@@ -25,3 +25,4 @@
     <script src="/js/drawChart.js?20181124"></script>
     <script src="/js/main.js?20181124"></script>
 @endpush
+7

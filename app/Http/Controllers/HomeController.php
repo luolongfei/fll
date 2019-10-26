@@ -9,7 +9,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
+use App\Http\Models\Price;
 
 class HomeController extends Controller
 {
@@ -39,7 +41,24 @@ class HomeController extends Controller
     {
         if (empty($urlCode)) {
             return view('common.error', [
-                'errorMsg' => 'urlCode参数缺失，无法查询，请重试'
+                'errorMsg' => 'URL CODE 参数缺失，无法查询，请检查并重试'
+            ]);
+        }
+
+        $uri = json_decode($urlCode, true);
+        if (!$uri) {
+            return view('common.error', [
+                'errorMsg' => 'URL CODE 解码失败，请检查并重试'
+            ]);
+        }
+
+        try {
+            $pi = Price::getPriceText($uri);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return view('common.error', [
+                'errorMsg' => $e->getMessage()
             ]);
         }
 
