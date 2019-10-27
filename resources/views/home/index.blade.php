@@ -27,9 +27,9 @@
         <div id="line-chart"{{-- style="height: 533px;"--}}></div>
         <!-- end 折线图 -->
     </div>
-    <div class="container">
+    {{--<div class="container">
         <button type="button" class="btn btn-outline-danger btn-sm" id="idea">勾搭</button>
-    </div>
+    </div>--}}
 @endsection
 
 @push('js')

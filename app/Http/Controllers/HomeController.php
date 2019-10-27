@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use App\Http\Models\Price;
+use Illuminate\Support\Facades\Redis;
 
 class HomeController extends Controller
 {
