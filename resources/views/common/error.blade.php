@@ -9,11 +9,13 @@
 
 @section('content')
     <div class="container">
-        <div class="raw">
-            <div class="col-12 mt-5 pt-5">
-                <div class="alert alert-warning show text-center display-5" role="alert">
-                    {{$errorMsg}}
-                </div>
+        <div class="raw mt-5 pt-5 show text-left">
+            <div class="col-12 alert alert-warning" role="alert">
+                <i class="icon ion-ios-information-circle-outline"></i>
+                {{$errorMsg}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
     </div>
