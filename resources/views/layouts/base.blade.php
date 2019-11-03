@@ -16,9 +16,8 @@
     <title>@yield('title', '查价喵') | 以史为镜，可以知奸商</title>
 
     <!-- common css -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/fontawesome/css/all.min.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="/bootstrap/v4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/ionicons/v4.5.10-1/css/ionicons.min.css" rel="stylesheet">
     <!-- end common css -->
 
     <!-- 当前页单独css -->
@@ -34,8 +33,8 @@
 @yield('footer', View::make('common.footer'))
 
 <!-- common js -->
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/bootstrap/v4.3.1/js/bootstrap.min.js"></script>
 <script src="/js/sweetalert.min.js"></script>
 <script src="/js/common.js"></script>
 <script>
