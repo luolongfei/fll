@@ -9,6 +9,8 @@
     "type": "project",
     "require": {
         "php": "^7.2",
+        "ext-bcmath": "*",
+        "ext-json": "*",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -17,8 +19,7 @@
         "laravel/tinker": "^1.0",
         "phpmailer/phpmailer": "^6.0",
         "piwik/device-detector": "^3.11",
-        "ext-json": "*",
-        "ext-bcmath": "*"
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

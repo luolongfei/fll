@@ -34,35 +34,34 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     * @param string $urlCode
+     * @param string $token
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function price(Request $request, $urlCode = '')
+    public function price(Request $request, $token = '')
     {
-        if (empty($urlCode)) {
+        if (empty($token)) {
             return view('common.error', [
-                'errorMsg' => 'URL CODE 参数缺失，无法查询，请检查并重试'
+                'errorMsg' => '参数缺失，无法查询，请检查并重试'
             ]);
         }
 
-        $uri = json_decode($urlCode, true);
-        if (!$uri) {
+        $allData = Redis::get($token);
+        if (is_null($allData)) {
             return view('common.error', [
-                'errorMsg' => 'URL CODE 解码失败，请检查并重试'
+                'errorMsg' => '啊哦，这个页面已经失效了，请重新查询并获取，每个页面的有效期为2小时'
             ]);
         }
 
-        try {
-            $pi = Price::getPriceText($uri);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-
+        $allData = json_decode($allData, true);
+        if (is_null($allData)) {
             return view('common.error', [
-                'errorMsg' => $e->getMessage()
+                'errorMsg' => '解码失败，小伙子别慌，我已经在处理了'
             ]);
         }
 
-        return view('home.price');
+        return view('home.price', [
+            'allData' => $allData
+        ]);
     }
 }

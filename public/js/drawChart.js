@@ -179,20 +179,12 @@ function drawChart() {
             let option = this.lineOption;
             let lineData = [];
             for (let i = 0; i < price_data.length; i++) {
-
-                let index = lineData.push([price_data[i].dt, price_data[i].pr]) - 1; // 维度X 维度Y
-                /*if (data[i].hasOwnProperty('info')) { // 满减凑单
-                    console.log(index);
-                    console.log(lineData[index]);
-                    lineData[index].tooltip = {
-                        formatter: '{c}啦啦啦，' + data[i].info.desc
-                    };
-                    // console.log(data[i]);
-                }*/
+                lineData.push([price_data[i].dt, price_data[i].pr]) - 1;
             }
 
             /**
              * 处理标题
+             *
              * @type {string}
              */
             let title = '「' + result.title + '」价格走势'.toString();
@@ -205,27 +197,6 @@ function drawChart() {
                 title = title.replace(regex, '\n');
             }
 
-            console.log(result);
-            /**
-             * 趋势
-             * @type {string}
-             */
-            let trend = '';
-            switch (result.price_data.trend) {
-                case 1:
-                    trend = '历史低价';
-                    break;
-                case 2:
-                    trend = '价格下降';
-                    break;
-                case 3:
-                    trend = '价格上涨';
-                    break;
-                case 4:
-                default:
-                    trend = '价格平稳'
-            }
-            console.log(trend);
             option.series[0].data = lineData;
             option.title = {
                 text: title,
