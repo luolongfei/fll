@@ -32,6 +32,15 @@ class HomeController extends Controller
         return view('home.about');
     }
 
+    public function copy($token = '')
+    {
+        $url = Redis::get($token);
+
+        return view('home.copy', [
+            'url' => $url
+        ]);
+    }
+
     /**
      * @param Request $request
      * @param string $token

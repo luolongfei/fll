@@ -20,6 +20,8 @@ Route::get('/', 'HomeController@index');
 Route::get('/about', 'HomeController@about');
 Route::get('/price/{urlCode?}', 'HomeController@price');
 
+Route::get('/shaer520/copy/{token}', 'HomeController@copy');
+
 /**
  * api
  */
