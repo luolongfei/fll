@@ -501,6 +501,11 @@
             color: #f56742 !important;
             font-weight: 600;
         }
+
+        a:visited {
+            text-decoration: none;
+            color: inherit!important;
+        }
     </style>
     <script src="/js/clipboard.min.js"></script>
 </head>
@@ -528,7 +533,7 @@
                                 <p class="weui-btn-area">
                                     <a id="copy" href="javascript:;" data-clipboard-text="{{$url}}"
                                        class="weui-btn weui-btn_primary">复制视频地址</a>
-                                    <a href="javascript:WeixinJSBridge.call('closeWindow');"
+                                    <a id="close" href="javascript:WeixinJSBridge.call('closeWindow');"
                                        class="weui-btn weui-btn_default">关闭</a>
                                 </p>
                             </div>
@@ -544,6 +549,7 @@
 <script>
     const clipboard = new ClipboardJS('#copy');
     const copy = $('#copy');
+    const close = $('#close');
     const msgDesc = $('#msg-desc');
     const msgTitle = $('#msg-title');
     const msgIcon = $('#msg-icon');
@@ -563,6 +569,13 @@
     window.onload = function () {
         var ua = window.navigator.userAgent;
         if (!/(?:MicroMessenger|QQ)/i.test(ua)) { // 若不是微信或qq浏览器，直接跳转到播放地址
+            msgIcon.removeClass('weui-icon-info').addClass('weui-icon-waiting');
+            msgTitle.html('正在跳转');
+            msgDesc.html('正在带你前往《庆余年》第<span class="red">{{$num}}</span>集的播放画面，请稍等...');
+
+            copy.hide();
+            close.hide();
+
             document.location.href = '{{$url}}';
         }
     }
