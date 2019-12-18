@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>已复制</title>
+    <title>复制</title>
     <link rel="shortcut icon" href="#">
     <link href="/css/copy.css" rel="stylesheet">
     <style type="text/css">
@@ -233,7 +233,7 @@
         }
 
         /* '' */
-        .weui-icon-delete:before {
+        .weui-icon-deconste:before {
             content: "\EA11";
         }
 
@@ -496,7 +496,13 @@
         .weui-btn-area_inline .weui-btn:last-child {
             margin-right: 0;
         }
+
+        .red {
+            color: #f56742 !important;
+            font-weight: 600;
+        }
     </style>
+    <script src="/js/clipboard.min.js"></script>
 </head>
 <body>
 <div style="height: 100%;">
@@ -507,16 +513,23 @@
                      style="padding-top: 46px; padding-bottom: 55px;">
                     <div class="router-view">
                         <div class="weui-msg">
-                            <div class="weui-msg__icon-area"><i class="weui-icon_msg weui-icon-success"></i></div>
-                            <div class="weui-msg__text-area"><h2 class="weui-msg__title">复制成功</h2>
+                            <div class="weui-msg__icon-area">
+                                <i id="msg-icon" class="weui-icon_msg weui-icon-info"></i>
+                            </div>
+                            <div class="weui-msg__text-area">
+                                <h2 id="msg-title" class="weui-msg__title">提醒操作</h2>
                                 <p class="weui-msg__desc"></p>
-                                <p class="weui-msg__desc">已成功复制视频地址，你可以打开浏览器，长按输入框，粘贴刚刚自动复制的内容，
-                                    如果是在浏览器打开此页面，也可<a href="{{$url}}">直接访问</a>
-                                </p></div>
+                                <p id="msg-desc" class="weui-msg__desc">这是《庆余年》第<span class="red">{{$num}}</span>集，
+                                    由于微信可能限制访问，请先点击下方的复制按钮，将自动复制播放地址，然后前往浏览器粘贴访问即可。
+                                    测试访问是否受限，可尝试<a href="{{$url}}">直接访问</a>
+                                </p>
+                            </div>
                             <div class="weui-msg__opr-area">
                                 <p class="weui-btn-area">
-                                    <a href="javascript:WeixinJSBridge.call('closeWindow');" class="weui-btn weui-btn_primary">我知道了</a>
-                                    <a href="javascript:WeixinJSBridge.call('closeWindow');" class="weui-btn weui-btn_default">关闭</a>
+                                    <a id="copy" href="javascript:;" data-clipboard-text="{{$url}}"
+                                       class="weui-btn weui-btn_primary">复制视频地址</a>
+                                    <a href="javascript:WeixinJSBridge.call('closeWindow');"
+                                       class="weui-btn weui-btn_default">关闭</a>
                                 </p>
                             </div>
                         </div>
@@ -527,27 +540,31 @@
     </div>
 </div>
 
+<script src="/js/jquery-3.4.1.min.js"></script>
 <script>
+    const clipboard = new ClipboardJS('#copy');
+    const copy = $('#copy');
+    const msgDesc = $('#msg-desc');
+    const msgTitle = $('#msg-title');
+    const msgIcon = $('#msg-icon');
+
+    clipboard.on('success', function (e) {
+        msgIcon.removeClass('weui-icon-info').addClass('weui-icon-success');
+        msgTitle.html('复制成功');
+        msgDesc.html('恭喜，你已成功复制视频播放地址，现在就前往浏览器粘贴访问吧。注意不要使用QQ浏览器，否则依然可能被限制。');
+
+        console.log('复制成功');
+        e.clearSelection();
+    });
+    clipboard.on('error', function () {
+        alert('复制失败，告诉罗先生');
+    });
+
     window.onload = function () {
-        const input = document.createElement('input');
-
-        input.setAttribute('readonly', 'readonly');
-        input.setAttribute('value', '{{$url}}');
-
-        document.body.appendChild(input);
-
-        input.focus();
-        input.setSelectionRange(0, 9999);
-        input.select();
-
-        if (document.execCommand('copy')) {
-            console.log('复制成功');
-        } else {
-            alert('复制失败，告诉罗先生');
-            WeixinJSBridge.call('closeWindow');
+        var ua = window.navigator.userAgent;
+        if (!/(?:MicroMessenger|QQ)/i.test(ua)) { // 若不是微信或qq浏览器，直接跳转到播放地址
+            document.location.href = '{{$url}}';
         }
-
-        document.body.removeChild(input);
     }
 </script>
 

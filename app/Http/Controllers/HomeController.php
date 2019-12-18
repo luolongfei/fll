@@ -35,9 +35,11 @@ class HomeController extends Controller
     public function copy($token = '')
     {
         $url = Redis::get($token);
+        $num = explode('_', $token)[1];
 
         return view('home.copy', [
-            'url' => $url
+            'url' => $url,
+            'num' => $num
         ]);
     }
 
