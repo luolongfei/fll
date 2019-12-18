@@ -513,9 +513,12 @@
                                 <p class="weui-msg__desc">已成功复制视频地址，你可以打开浏览器，长按输入框，粘贴刚刚自动复制的内容，
                                     如果是在浏览器打开此页面，也可<a href="{{$url}}">直接访问</a>
                                 </p></div>
-                            <!--<div class="weui-msg__opr-area"><p class="weui-btn-area"><a href="javascript:;"
-                                                                                        class="weui-btn weui-btn_primary">推荐操作</a><a
-                                    href="javascript:;" class="weui-btn weui-btn_default">辅助操作</a></p></div>-->
+                            <div class="weui-msg__opr-area">
+                                <p class="weui-btn-area">
+                                    <a href="javascript:history.go(-1);" class="weui-btn weui-btn_primary">我知道了</a>
+                                    <a href="javascript:history.go(-1);" class="weui-btn weui-btn_default">关闭</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -524,23 +527,27 @@
     </div>
 </div>
 
-<div id="copy" style="display: none;" data-clipboard-text="{{$url}}"></div>
-
-<script src="/js/clipboard.min.js"></script>
 <script>
     window.onload = function () {
-        var clipboard = new ClipboardJS('#copy');
+        const input = document.createElement('input');
 
-        clipboard.on('success', function () {
+        input.setAttribute('readonly', 'readonly');
+        input.setAttribute('value', '{{$url}}');
+
+        document.body.appendChild(input);
+
+        input.focus();
+        input.setSelectionRange(0, 9999);
+        input.select();
+
+        if (document.execCommand('copy')) {
             console.log('复制成功');
-        });
+        } else {
+            alert('复制失败，告诉罗先生');
+            window.history.go(-1);
+        }
 
-        clipboard.on('error', function () {
-            console.log('复制失败');
-            alert('复制失败，请重新打开此页面')
-        });
-
-        document.getElementById('copy').click();
+        document.body.removeChild(input);
     }
 </script>
 
