@@ -501,11 +501,6 @@
             color: #f56742 !important;
             font-weight: 600;
         }
-
-        a:visited {
-            text-decoration: none;
-            color: inherit!important;
-        }
     </style>
     <script src="/js/clipboard.min.js"></script>
 </head>
@@ -531,8 +526,8 @@
                             </div>
                             <div class="weui-msg__opr-area">
                                 <p class="weui-btn-area">
-                                    <a id="copy" href="javascript:;" data-clipboard-text="{{$url}}"
-                                       class="weui-btn weui-btn_primary">复制视频地址</a>
+                                    <button id="copy" data-clipboard-text="{{$url}}"
+                                       class="weui-btn weui-btn_primary">复制视频地址</button>
                                     <a id="close" href="javascript:WeixinJSBridge.call('closeWindow');"
                                        class="weui-btn weui-btn_default">关闭</a>
                                 </p>
