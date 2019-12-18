@@ -515,8 +515,8 @@
                                 </p></div>
                             <div class="weui-msg__opr-area">
                                 <p class="weui-btn-area">
-                                    <a href="javascript:history.go(-1);" class="weui-btn weui-btn_primary">我知道了</a>
-                                    <a href="javascript:history.go(-1);" class="weui-btn weui-btn_default">关闭</a>
+                                    <a href="javascript:WeixinJSBridge.call('closeWindow');" class="weui-btn weui-btn_primary">我知道了</a>
+                                    <a href="javascript:WeixinJSBridge.call('closeWindow');" class="weui-btn weui-btn_default">关闭</a>
                                 </p>
                             </div>
                         </div>
@@ -544,7 +544,7 @@
             console.log('复制成功');
         } else {
             alert('复制失败，告诉罗先生');
-            window.history.go(-1);
+            WeixinJSBridge.call('closeWindow');
         }
 
         document.body.removeChild(input);
